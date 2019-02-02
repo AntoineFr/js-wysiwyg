@@ -14,3 +14,9 @@ You have to include the file **wysiwyg.js** in your web page, and to call the fu
   };
 </script>
 ```
+
+## Styling
+You can use the following classes to customize the style of the different parts.
+- **wysiwyg-toolbar** : the group of buttons
+- **wysiwyg-button** : a formatting button
+- **wysiwyg-content** : the text zone

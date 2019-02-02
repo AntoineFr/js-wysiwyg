@@ -1,12 +1,16 @@
 function WYSIWYG(editor) {
+	const buttonClass = 'wysiwyg-button';
+
 	let container = document.createElement('div');
 
 	let toolbar = document.createElement('div');
+	toolbar.className = 'wysiwyg-toolbar';
 	container.appendChild(toolbar);
 
 	let boldButton = document.createElement('button');
 	boldButton.type = 'button';
 	boldButton.innerText = 'B';
+	boldButton.className = buttonClass;
 	boldButton.style.fontWeight = 'bold';
 	boldButton.addEventListener('click', function () { document.execCommand('bold', false, null); });
 	toolbar.appendChild(boldButton);
@@ -14,6 +18,7 @@ function WYSIWYG(editor) {
 	let italicButton = document.createElement('button');
 	italicButton.type = 'button';
 	italicButton.innerText = 'I';
+	italicButton.className = buttonClass;
 	italicButton.style.fontStyle = 'italic';
 	italicButton.addEventListener('click', function () { document.execCommand('italic', false, null); });
 	toolbar.appendChild(italicButton);
@@ -21,6 +26,7 @@ function WYSIWYG(editor) {
 	let underlineButton = document.createElement('button');
 	underlineButton.type = 'button';
 	underlineButton.innerText = 'U';
+	underlineButton.className = buttonClass;
 	underlineButton.style.textDecoration = 'underline';
 	underlineButton.addEventListener('click', function () { document.execCommand('underline', false, null); });
 	toolbar.appendChild(underlineButton);
@@ -28,6 +34,7 @@ function WYSIWYG(editor) {
 	let strikethroughButton = document.createElement('button');
 	strikethroughButton.type = 'button';
 	strikethroughButton.innerText = 'S';
+	strikethroughButton.className = buttonClass;
 	strikethroughButton.style.textDecoration = 'line-through';
 	strikethroughButton.addEventListener('click', function () { document.execCommand('strikeThrough', false, null); });
 	toolbar.appendChild(strikethroughButton);
@@ -35,16 +42,19 @@ function WYSIWYG(editor) {
 	let linkButton = document.createElement('button');
 	linkButton.type = 'button';
 	linkButton.innerText = 'Link';
+	linkButton.className = buttonClass;
 	linkButton.addEventListener('click', function () { if (url = prompt('Enter link URL')) document.execCommand('createLink', false, url); });
 	toolbar.appendChild(linkButton);
 
 	let imageButton = document.createElement('button');
 	imageButton.type = 'button';
 	imageButton.innerText = 'Image';
+	imageButton.className = buttonClass;
 	imageButton.addEventListener('click', function () { if (url = prompt('Enter image URL')) document.execCommand('insertImage', false, url); });
 	toolbar.appendChild(imageButton);
 
 	let formatSelect = document.createElement('select');
+	formatSelect.className = buttonClass;
 
 	let formatOptionNormal = document.createElement('option');
 	formatOptionNormal.value = '';
@@ -71,17 +81,20 @@ function WYSIWYG(editor) {
 	let unorderedListButton = document.createElement('button');
 	unorderedListButton.type = 'button';
 	unorderedListButton.innerText = 'UL';
+	unorderedListButton.className = buttonClass;
 	unorderedListButton.addEventListener('click', function () { document.execCommand('insertUnorderedList', false, null); });
 	toolbar.appendChild(unorderedListButton);
 
 	let orderedListButton = document.createElement('button');
 	orderedListButton.type = 'button';
 	orderedListButton.innerText = 'OL';
+	orderedListButton.className = buttonClass;
 	orderedListButton.addEventListener('click', function () { document.execCommand('insertOrderedList', false, null); });
 	toolbar.appendChild(orderedListButton);
 
 	let content = document.createElement('div');
 	content.contentEditable = true;
+	content.className = 'wysiwyg-content';
 	content.innerHTML = editor.value.trim();
 	content.style.overflow = 'auto';
 	container.appendChild(content);
@@ -89,6 +102,7 @@ function WYSIWYG(editor) {
 	let toggleSourceButton = document.createElement('button');
 	toggleSourceButton.type = 'button';
 	toggleSourceButton.innerText = 'Source';
+	toggleSourceButton.className = buttonClass;
 	toggleSourceButton.addEventListener('click', function () {
 		if (editor.style.display === 'block') {
 			content.innerHTML = editor.value;
