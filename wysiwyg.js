@@ -32,6 +32,18 @@ function WYSIWYG(editor) {
 	strikethroughButton.addEventListener('click', function () { document.execCommand('strikeThrough', false, null); });
 	toolbar.appendChild(strikethroughButton);
 
+	let linkButton = document.createElement('button');
+	linkButton.type = 'button';
+	linkButton.innerText = 'Link';
+	linkButton.addEventListener('click', function () { if (url = prompt('Enter link URL')) document.execCommand('createLink', false, url); });
+	toolbar.appendChild(linkButton);
+
+	let imageButton = document.createElement('button');
+	imageButton.type = 'button';
+	imageButton.innerText = 'Image';
+	imageButton.addEventListener('click', function () { if (url = prompt('Enter image URL')) document.execCommand('insertImage', false, url); });
+	toolbar.appendChild(imageButton);
+
 	let content = document.createElement('div');
 	content.contentEditable = true;
 	content.innerHTML = editor.value.trim();
