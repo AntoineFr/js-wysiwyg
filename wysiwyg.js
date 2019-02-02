@@ -4,11 +4,6 @@ function WYSIWYG(editor, params) {
 	let options = params || {};
 	let buttonsOrder = options.order || ['bold', 'italic', 'underline', 'strikethrough', 'orderedlist', 'unorderedlist', 'link', 'image', 'format', 'justify', 'subscript', 'superscript', 'source'];
 
-	let container = document.createElement('div');
-
-	let toolbar = document.createElement('div');
-	toolbar.className = 'wysiwyg-toolbar';
-	container.appendChild(toolbar);
 
 	let boldButton = document.createElement('button');
 	boldButton.type = 'button';
@@ -100,17 +95,17 @@ function WYSIWYG(editor, params) {
 	justifyOptionFull.addEventListener('click', function () { document.execCommand('justifyFull', false, null); justifySelect.selectedIndex = 0; });
 	justifySelect.appendChild(justifyOptionFull);
 
-	let unorderedListButton = document.createElement('button');
-	unorderedListButton.type = 'button';
-	unorderedListButton.innerText = 'UL';
-	unorderedListButton.className = buttonClass;
-	unorderedListButton.addEventListener('click', function () { document.execCommand('insertUnorderedList', false, null); });
+	let unorderedlistButton = document.createElement('button');
+	unorderedlistButton.type = 'button';
+	unorderedlistButton.innerText = 'UL';
+	unorderedlistButton.className = buttonClass;
+	unorderedlistButton.addEventListener('click', function () { document.execCommand('insertUnorderedList', false, null); });
 
-	let orderedListButton = document.createElement('button');
-	orderedListButton.type = 'button';
-	orderedListButton.innerText = 'OL';
-	orderedListButton.className = buttonClass;
-	orderedListButton.addEventListener('click', function () { document.execCommand('insertOrderedList', false, null); });
+	let orderedlistButton = document.createElement('button');
+	orderedlistButton.type = 'button';
+	orderedlistButton.innerText = 'OL';
+	orderedlistButton.className = buttonClass;
+	orderedlistButton.addEventListener('click', function () { document.execCommand('insertOrderedList', false, null); });
 
 	let subscriptButton = document.createElement('button');
 	subscriptButton.type = 'button';
@@ -123,6 +118,13 @@ function WYSIWYG(editor, params) {
 	superscriptButton.innerText = 'Sup';
 	superscriptButton.className = buttonClass;
 	superscriptButton.addEventListener('click', function () { document.execCommand('superscript', false, null); });
+
+
+	let container = document.createElement('div');
+
+	let toolbar = document.createElement('div');
+	toolbar.className = 'wysiwyg-toolbar';
+	container.appendChild(toolbar);
 
 	let content = document.createElement('div');
 	content.contentEditable = true;
@@ -161,8 +163,8 @@ function WYSIWYG(editor, params) {
 		'image': imageButton,
 		'format': formatSelect,
 		'justify': justifySelect,
-		'orderedlist': orderedListButton,
-		'unorderedlist': unorderedListButton,
+		'orderedlist': orderedlistButton,
+		'unorderedlist': unorderedlistButton,
 		'subscript': subscriptButton,
 		'superscript': superscriptButton,
 		'source': toggleSourceButton
@@ -177,15 +179,16 @@ function WYSIWYG(editor, params) {
 		}
 	});
 
-	content.addEventListener('keyup', function () {
-		editor.value = content.innerHTML;
-	});
-
 	content.className = editor.className;
+
 	let editorStyle = window.getComputedStyle(editor);
 	content.style.width = editorStyle.getPropertyValue('width');
 	content.style.height = editorStyle.getPropertyValue('height');
 	content.style.resize = editorStyle.getPropertyValue('resize');
+
+	content.addEventListener('keyup', function () {
+		editor.value = content.innerHTML;
+	});
 
 	editor.parentNode.insertBefore(container, editor);
 	editor.style.display = 'none';
