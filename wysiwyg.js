@@ -75,6 +75,23 @@ function WYSIWYG(editor) {
 	content.style.resize = 'both';
 	container.appendChild(content);
 
+	let toggleSourceButton = document.createElement('button');
+	toggleSourceButton.type = 'button';
+	toggleSourceButton.innerText = 'Source';
+	toggleSourceButton.addEventListener('click', function () {
+		if (editor.style.display === 'block') {
+			content.innerHTML = editor.value;
+			content.style.display = 'block';
+			editor.style.display = 'none';
+		}
+		else {
+			editor.value = content.innerHTML;
+			content.style.display = 'none';
+			editor.style.display = 'block';
+		}
+	});
+	toolbar.appendChild(toggleSourceButton);
+
 	content.addEventListener('keyup', function () {
 		editor.value = content.innerHTML;
 	});
