@@ -1,5 +1,8 @@
-function WYSIWYG(editor) {
+function WYSIWYG(editor, params) {
 	const buttonClass = 'wysiwyg-button';
+
+	let options = params || {};
+	let buttonsOrder = options.order || ['bold', 'italic', 'underline', 'strikethrough', 'orderedlist', 'unorderedlist', 'link', 'image', 'format', 'justify', 'subscript', 'superscript', 'source'];
 
 	let container = document.createElement('div');
 
@@ -13,7 +16,6 @@ function WYSIWYG(editor) {
 	boldButton.className = buttonClass;
 	boldButton.style.fontWeight = 'bold';
 	boldButton.addEventListener('click', function () { document.execCommand('bold', false, null); });
-	toolbar.appendChild(boldButton);
 
 	let italicButton = document.createElement('button');
 	italicButton.type = 'button';
@@ -21,7 +23,6 @@ function WYSIWYG(editor) {
 	italicButton.className = buttonClass;
 	italicButton.style.fontStyle = 'italic';
 	italicButton.addEventListener('click', function () { document.execCommand('italic', false, null); });
-	toolbar.appendChild(italicButton);
 
 	let underlineButton = document.createElement('button');
 	underlineButton.type = 'button';
@@ -29,7 +30,6 @@ function WYSIWYG(editor) {
 	underlineButton.className = buttonClass;
 	underlineButton.style.textDecoration = 'underline';
 	underlineButton.addEventListener('click', function () { document.execCommand('underline', false, null); });
-	toolbar.appendChild(underlineButton);
 
 	let strikethroughButton = document.createElement('button');
 	strikethroughButton.type = 'button';
@@ -37,21 +37,18 @@ function WYSIWYG(editor) {
 	strikethroughButton.className = buttonClass;
 	strikethroughButton.style.textDecoration = 'line-through';
 	strikethroughButton.addEventListener('click', function () { document.execCommand('strikeThrough', false, null); });
-	toolbar.appendChild(strikethroughButton);
 
 	let linkButton = document.createElement('button');
 	linkButton.type = 'button';
 	linkButton.innerText = 'Link';
 	linkButton.className = buttonClass;
 	linkButton.addEventListener('click', function () { if (url = prompt('Enter link URL')) document.execCommand('createLink', false, url); });
-	toolbar.appendChild(linkButton);
 
 	let imageButton = document.createElement('button');
 	imageButton.type = 'button';
 	imageButton.innerText = 'Image';
 	imageButton.className = buttonClass;
 	imageButton.addEventListener('click', function () { if (url = prompt('Enter image URL')) document.execCommand('insertImage', false, url); });
-	toolbar.appendChild(imageButton);
 
 	let formatSelect = document.createElement('select');
 	formatSelect.className = buttonClass;
@@ -75,8 +72,6 @@ function WYSIWYG(editor) {
 	formatOptionPre.innerText = 'Pre';
 	formatOptionPre.addEventListener('click', function () { document.execCommand('formatBlock', false, '<pre>'); formatSelect.selectedIndex = 0; });
 	formatSelect.appendChild(formatOptionPre);
-
-	toolbar.appendChild(formatSelect);
 
 	let justifySelect = document.createElement('select');
 	justifySelect.className = buttonClass;
@@ -105,35 +100,29 @@ function WYSIWYG(editor) {
 	justifyOptionFull.addEventListener('click', function () { document.execCommand('justifyFull', false, null); justifySelect.selectedIndex = 0; });
 	justifySelect.appendChild(justifyOptionFull);
 
-	toolbar.appendChild(justifySelect);
-
 	let unorderedListButton = document.createElement('button');
 	unorderedListButton.type = 'button';
 	unorderedListButton.innerText = 'UL';
 	unorderedListButton.className = buttonClass;
 	unorderedListButton.addEventListener('click', function () { document.execCommand('insertUnorderedList', false, null); });
-	toolbar.appendChild(unorderedListButton);
 
 	let orderedListButton = document.createElement('button');
 	orderedListButton.type = 'button';
 	orderedListButton.innerText = 'OL';
 	orderedListButton.className = buttonClass;
 	orderedListButton.addEventListener('click', function () { document.execCommand('insertOrderedList', false, null); });
-	toolbar.appendChild(orderedListButton);
 
 	let subscriptButton = document.createElement('button');
 	subscriptButton.type = 'button';
 	subscriptButton.innerText = 'Sub';
 	subscriptButton.className = buttonClass;
 	subscriptButton.addEventListener('click', function () { document.execCommand('subscript', false, null); });
-	toolbar.appendChild(subscriptButton);
 
 	let superscriptButton = document.createElement('button');
 	superscriptButton.type = 'button';
 	superscriptButton.innerText = 'Sup';
 	superscriptButton.className = buttonClass;
 	superscriptButton.addEventListener('click', function () { document.execCommand('superscript', false, null); });
-	toolbar.appendChild(superscriptButton);
 
 	let content = document.createElement('div');
 	content.contentEditable = true;
@@ -162,7 +151,31 @@ function WYSIWYG(editor) {
 			editor.style.height = content.style.height;
 		}
 	});
-	toolbar.appendChild(toggleSourceButton);
+
+	const allButtons = {
+		'bold': boldButton,
+		'italic': italicButton,
+		'underline': underlineButton,
+		'strikethrough': strikethroughButton,
+		'link': linkButton,
+		'image': imageButton,
+		'format': formatSelect,
+		'justify': justifySelect,
+		'orderedlist': orderedListButton,
+		'unorderedlist': unorderedListButton,
+		'subscript': subscriptButton,
+		'superscript': superscriptButton,
+		'source': toggleSourceButton
+	};
+
+	buttonsOrder.forEach(function (button) {
+		if (allButtons.hasOwnProperty(button)) {
+			toolbar.appendChild(allButtons[button]);
+		}
+		else {
+			console.error('[WYSIWYG] Button ' + button + ' does not exist.');
+		}
+	});
 
 	content.addEventListener('keyup', function () {
 		editor.value = content.innerHTML;

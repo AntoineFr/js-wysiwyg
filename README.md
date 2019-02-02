@@ -20,3 +20,11 @@ You can use the following classes to customize the style of the different parts.
 - **wysiwyg-toolbar** : the group of buttons
 - **wysiwyg-button** : a formatting button
 - **wysiwyg-content** : the text zone
+
+## Buttons order
+You can change the buttons order, or even add or remove buttons by passing a second argument to the function **WYSIWYG**.
+```js
+WYSIWYG(document.getElementById('wysiwyg-source'), {
+  'order': ['bold', 'italic', 'unorderedlist', 'link', 'format', 'source']
+});
+```
