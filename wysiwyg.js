@@ -84,7 +84,6 @@ function WYSIWYG(editor) {
 	content.contentEditable = true;
 	content.innerHTML = editor.value.trim();
 	content.style.overflow = 'auto';
-	content.style.resize = 'both';
 	container.appendChild(content);
 
 	let toggleSourceButton = document.createElement('button');
@@ -95,11 +94,15 @@ function WYSIWYG(editor) {
 			content.innerHTML = editor.value;
 			content.style.display = 'block';
 			editor.style.display = 'none';
+			content.style.width = editor.style.width;
+			content.style.height = editor.style.height;
 		}
 		else {
 			editor.value = content.innerHTML;
 			content.style.display = 'none';
 			editor.style.display = 'block';
+			editor.style.width = content.style.width;
+			editor.style.height = content.style.height;
 		}
 	});
 	toolbar.appendChild(toggleSourceButton);
@@ -107,6 +110,12 @@ function WYSIWYG(editor) {
 	content.addEventListener('keyup', function () {
 		editor.value = content.innerHTML;
 	});
+
+	content.className = editor.className;
+	let editorStyle = window.getComputedStyle(editor);
+	content.style.width = editorStyle.getPropertyValue('width');
+	content.style.height = editorStyle.getPropertyValue('height');
+	content.style.resize = editorStyle.getPropertyValue('resize');
 
 	editor.parentNode.insertBefore(container, editor);
 	editor.style.display = 'none';
