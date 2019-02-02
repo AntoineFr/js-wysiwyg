@@ -68,6 +68,18 @@ function WYSIWYG(editor) {
 
 	toolbar.appendChild(formatSelect);
 
+	let unorderedListButton = document.createElement('button');
+	unorderedListButton.type = 'button';
+	unorderedListButton.innerText = 'UL';
+	unorderedListButton.addEventListener('click', function () { document.execCommand('insertUnorderedList', false, null); });
+	toolbar.appendChild(unorderedListButton);
+
+	let orderedListButton = document.createElement('button');
+	orderedListButton.type = 'button';
+	orderedListButton.innerText = 'OL';
+	orderedListButton.addEventListener('click', function () { document.execCommand('insertOrderedList', false, null); });
+	toolbar.appendChild(orderedListButton);
+
 	let content = document.createElement('div');
 	content.contentEditable = true;
 	content.innerHTML = editor.value.trim();
