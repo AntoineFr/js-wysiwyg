@@ -78,6 +78,35 @@ function WYSIWYG(editor) {
 
 	toolbar.appendChild(formatSelect);
 
+	let justifySelect = document.createElement('select');
+	justifySelect.className = buttonClass;
+
+	let justifyOptionLeft = document.createElement('option');
+	justifyOptionLeft.value = 'left';
+	justifyOptionLeft.innerText = 'Left';
+	justifyOptionLeft.addEventListener('click', function () { document.execCommand('justifyLeft', false, null); justifySelect.selectedIndex = 0; });
+	justifySelect.appendChild(justifyOptionLeft);
+
+	let justifyOptionCenter = document.createElement('option');
+	justifyOptionCenter.value = 'center';
+	justifyOptionCenter.innerText = 'Center';
+	justifyOptionCenter.addEventListener('click', function () { document.execCommand('justifyCenter', false, null); justifySelect.selectedIndex = 0; });
+	justifySelect.appendChild(justifyOptionCenter);
+
+	let justifyOptionRight = document.createElement('option');
+	justifyOptionRight.value = 'right';
+	justifyOptionRight.innerText = 'Right';
+	justifyOptionRight.addEventListener('click', function () { document.execCommand('justifyRight', false, null); justifySelect.selectedIndex = 0; });
+	justifySelect.appendChild(justifyOptionRight);
+
+	let justifyOptionFull = document.createElement('option');
+	justifyOptionFull.value = 'full';
+	justifyOptionFull.innerText = 'Full';
+	justifyOptionFull.addEventListener('click', function () { document.execCommand('justifyFull', false, null); justifySelect.selectedIndex = 0; });
+	justifySelect.appendChild(justifyOptionFull);
+
+	toolbar.appendChild(justifySelect);
+
 	let unorderedListButton = document.createElement('button');
 	unorderedListButton.type = 'button';
 	unorderedListButton.innerText = 'UL';
@@ -91,6 +120,20 @@ function WYSIWYG(editor) {
 	orderedListButton.className = buttonClass;
 	orderedListButton.addEventListener('click', function () { document.execCommand('insertOrderedList', false, null); });
 	toolbar.appendChild(orderedListButton);
+
+	let subscriptButton = document.createElement('button');
+	subscriptButton.type = 'button';
+	subscriptButton.innerText = 'Sub';
+	subscriptButton.className = buttonClass;
+	subscriptButton.addEventListener('click', function () { document.execCommand('subscript', false, null); });
+	toolbar.appendChild(subscriptButton);
+
+	let superscriptButton = document.createElement('button');
+	superscriptButton.type = 'button';
+	superscriptButton.innerText = 'Sup';
+	superscriptButton.className = buttonClass;
+	superscriptButton.addEventListener('click', function () { document.execCommand('superscript', false, null); });
+	toolbar.appendChild(superscriptButton);
 
 	let content = document.createElement('div');
 	content.contentEditable = true;
