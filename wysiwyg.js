@@ -44,6 +44,30 @@ function WYSIWYG(editor) {
 	imageButton.addEventListener('click', function () { if (url = prompt('Enter image URL')) document.execCommand('insertImage', false, url); });
 	toolbar.appendChild(imageButton);
 
+	let formatSelect = document.createElement('select');
+
+	let formatOptionNormal = document.createElement('option');
+	formatOptionNormal.value = '';
+	formatOptionNormal.innerText = 'Normal';
+	formatOptionNormal.addEventListener('click', function () { document.execCommand('formatBlock', false, '<p>'); formatSelect.selectedIndex = 0; });
+	formatSelect.appendChild(formatOptionNormal);
+
+	for (let level = 1; level <= 6; level++) {
+		let formatOptionTitle = document.createElement('option');
+		formatOptionTitle.value = 'h' + level;
+		formatOptionTitle.innerText = 'Title ' + level;
+		formatOptionTitle.addEventListener('click', function () { document.execCommand('formatBlock', false, '<h' + level + '>'); formatSelect.selectedIndex = 0; });
+		formatSelect.appendChild(formatOptionTitle);
+	}
+
+	let formatOptionPre = document.createElement('option');
+	formatOptionPre.value = 'pre';
+	formatOptionPre.innerText = 'Pre';
+	formatOptionPre.addEventListener('click', function () { document.execCommand('formatBlock', false, '<pre>'); formatSelect.selectedIndex = 0; });
+	formatSelect.appendChild(formatOptionPre);
+
+	toolbar.appendChild(formatSelect);
+
 	let content = document.createElement('div');
 	content.contentEditable = true;
 	content.innerHTML = editor.value.trim();
